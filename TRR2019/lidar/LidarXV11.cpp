@@ -49,6 +49,7 @@ void LidarXV11::update(uint8_t byte) {
 		break;
 	case WAIT_SPEED_H:
 		packet.speed = ((byte << 8) | tmp) / 64;
+		//Serial.println(packet.speed);
 		c = 0;
 		state = READ_DATA_0;
 		break;
