@@ -85,6 +85,6 @@ void loop()
 */
 	//command();
 	dataGather();
-	asservLidar();
+	//asservLidar();
 
 }
