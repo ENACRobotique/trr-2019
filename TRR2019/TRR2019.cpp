@@ -13,8 +13,52 @@ LidarXV11 lidar = LidarXV11();
 bool isLidarSet;
 Metro lidarAsservTime(500);
 unsigned int lidarPWM;
-unsigned int startTime;
+uint32_t startTime;
 
+void test(){
+	uint32_t startTime = millis(), currentTime;
+	//int i = 1;
+	//int servoAngleCommand = 80;
+	//servo.write(servoAngleCommand);
+	/*while (servoAngleCommand > 30){ //rester dans [50;120]
+		servo.write(servoAngleCommand);
+		servoAngleCommand--;
+		while ((millis() - startTime) < 50){}
+		startTime = millis();
+	}*/
+	for (int cmd = 75; cmd<110; cmd += 5){
+		if( ! (abs(cmd - 85)<10)){
+			Serial.println(cmd);
+			servo.write(cmd);
+			analogWrite(MOT1_PWM, 50);
+			startTime = millis();
+			while ((millis() - startTime) < 2000){}
+			analogWrite(MOT1_PWM, 0);
+			while ((millis() - startTime) < 3000){}
+
+		}
+	}
+	/*while (millis() - startTime < 1000){
+		servo.write(servoAngleCommand);<
+		Serial.print(millis());
+		analogWrite(MOT1_PWM, 50);
+		/*if (millis() - startTime > 500){
+			startTime = millis();
+			i *= 0;
+			servoAngleCommand = 80 + i*10;
+		}*/
+
+	//test distance et rayon
+	/*do {
+		currentTime = millis();
+	} while ((currentTime - startTime) < 3000);
+	analogWrite(MOT1_PWM,0);
+	*/
+
+	//servo.write(servoAngleCommand+10);
+
+	while(1){} ; // bloque
+}
 
 void command() { // Updates the servo command
 	int NB_LIDAR_ANGLES = 5; // <= 8
@@ -97,11 +141,11 @@ void setup()
 	lidarPWM = 60;
 	Serial.begin(115200);
 	Serial2.begin(115200);
-	servo.attach(SERVO2);
+	servo.attach(SERVO1);
 	pinMode(MOT1_DIR, OUTPUT);
 	digitalWrite(MOT1_DIR, HIGH);
 	servo.write(90);
-	//while(!Serial);
+	while(!Serial);
 	startTime = millis();
 }
 
@@ -128,7 +172,9 @@ void loop()
 	Serial.println(lidar.is_valid(10));
 	Serial.print("    ");
 */
-	command();
-	asservLidar();
+	//command();
+
+	//asservLidar();
+	test();
 
 }
